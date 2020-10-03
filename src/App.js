@@ -2,6 +2,23 @@ import React from 'react';
 import countriesAll from "./countriesAll.json";
 import './App.css';
 
+function Search() {
+  return (
+    <div id="search">
+      <input id="searchBar"></input>
+      <select id="regionSelect">
+        <option>Select a region...</option>
+        <option>Africa</option>
+        <option>Americas</option>
+        <option>Asia</option>
+        <option>Europe</option>
+        <option>Oceania</option>
+        <option>Polar</option>
+      </select>
+    </div>
+  );
+}
+
 function CountryElem(country) {
   return (
     <div className="country">
@@ -27,6 +44,7 @@ function CountryList(props) {
 function App() {
   return (
     <div id="page">
+      <Search/>
       <CountryList countries={countriesAll}/>
     </div>
   );
