@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 import countriesAll from "./countriesAll.json";
 import './App.css';
 
-let selectedCountry = ""; // Not sure if that will be necessary
-
 function Search(props) {
   let [searchInput, setSearchInput] = useState("");
 
@@ -49,22 +47,15 @@ function SelectRegion(props) {
   );
 }
 
-function CountryElem(country) {
-
-  // TODO: Implement onClick function properly
-  function selectIndividualCountry() {  
-    selectedCountry = country;
-    console.log("YOU HAVE SELECTED " + selectedCountry.name);
-  }
-
+function CountryElem(props) {
   return (
-    <div className="country" onClick={selectIndividualCountry}>
-      <img src={country.flag} alt="flag"/>
-      <h2>{country.name}</h2>
+    <div className="country" onClick={() => props.onSelect(props.country)}>
+      <img src={props.country.flag} alt="flag"/>
+      <h2>{props.country.name}</h2>
       <div className="countryData">
-        <p><b>Population:  </b>{country.population}</p>
-        <p><b>Region:  </b>{country.region}</p>
-        <p><b>Capital:  </b>{country.capital}</p>
+        <p><b>Population:  </b>{props.country.population}</p>
+        <p><b>Region:  </b>{props.country.region}</p>
+        <p><b>Capital:  </b>{props.country.capital}</p>
       </div>
     </div>
   );
@@ -72,8 +63,8 @@ function CountryElem(country) {
 
 function CountryList(props) {
   return (
-    <div className="countryList">
-      {props.countries.map(CountryElem)}
+    <div className="countryList"> 
+      {props.countries.map(country => <CountryElem country={country} onSelect={country => props.select(country)}/>)}
     </div>
   );
 }
@@ -84,13 +75,15 @@ function IndividualCountry(props) {
     for(let j = 0; j < countriesAll.length; ++j) {
       if(props.country.borders[i] === countriesAll[j].alpha3Code) {
         borderCountries.push(countriesAll[j]);
-        // break
+        break;
       }
     }
   }
     
   return (
-    <div className="individualCountry">
+    <div className="individualCountryElem">
+      <button onClick={() => props.changeSelection(null)}>Back</button>
+      <div className="individualCountry">
       <img src={props.country.flag} alt="flag"/>
       <div className="details">
         <h2>{props.country.name}</h2>
@@ -108,14 +101,13 @@ function IndividualCountry(props) {
             <p><b>Languages:  </b>{props.country.languages.map((lang) => lang.name + ", ")}</p>
           </div>
         </div>
-        <ul className="borderCountries">
-          {borderCountries.map(neighbor => {
-            return <li><button>{neighbor.name}</button></li>
-            // TODO: Make the buttons work
-          })}
-        </ul>
-      </div> 
+          <ul className="borderCountries">
+            {borderCountries.map(neighbor => <li><button onClick={() => props.changeSelection(neighbor)}>{neighbor.name}</button></li>)}
+          </ul>
+        </div> 
+      </div>
     </div>
+    
   );
 }
 
@@ -153,17 +145,29 @@ function App() {
     setListOfCountries(newCountryList);
   }
 
-  
-  return (
-    <div id="page">
-      <div id="topbar">
-        <Search search={searchCountries}/>
-        <SelectRegion select={filterCountries}/>
-      </div> 
-      <CountryList countries={listOfCountries}/>
-    </div>
-  );
+  let [selectedCountry, setSelectedCountry] = useState(null);
+
+  if(selectedCountry) {
+    return (
+      <div id="page">
+        <div id="topbar"></div>
+        <IndividualCountry country={selectedCountry} changeSelection={country => setSelectedCountry(country)}/>
+      </div>
+    );
+  }
+  else {
+    return(
+      <div id="page">
+        <div id="topbar">
+          <Search search={searchCountries}/>
+          <SelectRegion select={filterCountries}/>
+        </div>
+        <CountryList countries={listOfCountries} select={country => setSelectedCountry(country)}/>
+      </div>
+    );
+  }
 }
+
 export default App;
 
 /*
