@@ -2,6 +2,32 @@
     background-color: #fafafa;
 }
 
+#topbar {
+    height: 48px;
+    background-color: white;
+    margin-bottom: 50px;
+    box-shadow: 0px 6px 11px -3px rgba(0,0,0,0.25);
+}
+
+h1 {
+    font-size: 24px;
+    margin-left: 80px;
+}
+
+#navigationBar {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 80px 0 80px;
+}
+
+#searchBar{
+    padding: 16px;
+}
+
+#regionSelect {
+    padding: 0 40px 0 8px;
+}
+
 .countryList {
     display: flex;
     justify-content: center;
@@ -17,8 +43,7 @@
 }
 
 .country > img {
-    width: 256px;
-    height: 160px;
+    width: 250px;
     border-radius: 8px 8px 0 0;
 }
 
@@ -35,4 +60,108 @@
     font-size: 12px;
     margin: 8px;
     margin-left: 20px;
+}
+
+/* INDIVIDUAL COUNTRY CSS */
+
+.backButton {
+    padding: 8px 24px;
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.25);
+    background-color: white;
+    margin: 48px 0 16px 0;
+    border: none;
+    border-radius: 6px; 
+}
+
+.individualCountryElem {
+    margin: auto;
+    max-width: 1000px;
+}
+
+.individualCountry {
+    display:flex;
+    align-items: center;
+}
+
+.individualCountry > img {
+    max-width: 400px;
+}
+
+.details {
+    margin-left: 100px;
+}
+
+.IndCntrData {
+    display: flex;
+    justify-content: space-between;
+}
+
+.IndCntrData2 {
+    margin-left: 100px;
+}
+
+.borderCountries {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.borderCountries > span {
+    margin-bottom: 12px;
+    margin-right: 12px;
+    padding: 8px 8px 8px 0;
+}
+
+.borderCountries > li > button {
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    background-color: white;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 3px; 
+    padding: 8px;
+}
+
+/*MEDIA QUERIES*/
+
+@media screen and (max-width: 1000px) {
+    .backButton {
+        margin-left: 100px;
+    }
+    .individualCountry {
+        display: block;
+        text-align: center;
+    }
+
+    .details {
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #navigationBar {
+        display: block;
+        text-align: center;
+    }
+
+    .individualCountryElem {
+        margin: 16px;
+    }
+
+    .individualCountry > img {
+        width: 80%;
+    }
+
+    .IndCntrData {
+        display: block;
+    }
+
+    .IndCntrData2, .details, .backButton  {
+        margin-left: 0;
+    }
+
+    .IndCntrData, .IndCntrData2, .borderCountries{
+        margin-top: 50px;
+    }
 }
